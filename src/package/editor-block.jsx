@@ -30,8 +30,15 @@ export default defineComponent({
         return () => {
             // 通过block的key属性直接获取对应的组件
             const component = config.componentMap[props.block.key];
+
+            
             // 获取render函数
-            const RenderComponent = component.render();
+            const RenderComponent = component.render(
+                {
+                    // 每次渲染的时候 渲染文本跟实际渲染出来的效果要统一
+                    props: props.block.props,
+                }
+            );
             return <div class="editor-block"
                 style={blockStyles.value}
                 ref={blockRef}>

@@ -130,6 +130,37 @@ export function useCommand(data,focusData) {
       }
     }
   })
+// 更新某个部件
+registry({
+  name: 'updateBlock', // 更新某个部件 零件??
+  pushQueue: true,
+  execute(newBlock, oldBlock) {
+      let state = {
+        // 原来的数组不会改变(撤销用)
+          before: data.value.blocks,
+          // 更新部分的blocks(部件)
+          after: (() => {
+              let blocks = [...data.value.blocks]; // 拷贝一份用于新的block
+              const index = data.value.blocks.indexOf(oldBlock); // 找老的 需要通过老的查找
+              if (index > -1) {
+                // 从旧的位置换成新的 splice会对原来的数组产生影响 所以前面拷贝一个新的数组
+                  blocks.splice(index, 1, newBlock)
+              }
+              return blocks;
+          })()//更新直接先执行一次
+      }
+      return {
+          redo: () => {
+              data.value = { ...data.value, blocks: state.after }
+          },
+          undo: () => {
+              data.value = { ...data.value, blocks: state.before }
+          }
+      }
+  }
+})
+
+
   // 
   registry({
     // 置顶
