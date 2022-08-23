@@ -76,15 +76,15 @@ export default defineComponent({
                     }))
                 }
 
-                // if(component && component.model){
-                //     //                                                 default   标签名
-                //     content.push(Object.entries(component.model).map(([modelName,label])=>{
-                //         return <ElFormItem label={label}>
-                //             {/* model => {default:"username"} */}
-                //             <ElInput  v-model={state.editData.model[modelName]}></ElInput>
-                //         </ElFormItem>
-                //     }))
-                // }
+                if(component && component.model){
+                    //                                                 default   标签名
+                    content.push(Object.entries(component.model).map(([modelName,label])=>{
+                        return <ElFormItem label={label}>
+                            {/* model => {default:"username"} */}
+                            <ElInput  v-model={state.editData.model[modelName]}></ElInput>
+                        </ElFormItem>
+                    }))
+                }
               
             }
 

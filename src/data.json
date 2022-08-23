@@ -10,10 +10,9 @@
             "zIndex": 1,
             "key": "text",
             "props": {
-             
-                "text":"testText",
-                "color":"#ff0000",
-                "size":"14px"
+                "text": "testText",
+                "color": "#ff0000",
+                "size": "14px"
             }
         },
         {
@@ -21,10 +20,10 @@
             "left": 200,
             "zIndex": 1,
             "key": "button",
-            "props":{
-                "text":"testBtn",
-                "type":"primary",
-                "size":"mini"
+            "props": {
+                "text": "testBtn",
+                "type": "primary",
+                "size": "mini"
             }
         },
         {
@@ -32,7 +31,8 @@
             "left": 300,
             "zIndex": 1,
             "key": "input",
-            "props":{},"model":{}
+            "props": {},
+            "model": {}
         }
     ]
 }

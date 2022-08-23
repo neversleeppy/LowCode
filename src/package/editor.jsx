@@ -14,7 +14,8 @@ import EditorOperator from './editor-operator'
 
 export default defineComponent({
     props: {
-        modelValue: { type: Object }
+        modelValue: { type: Object },
+        formData: { type: Object }
     },
     emits: ['update:modelValue'],
 
