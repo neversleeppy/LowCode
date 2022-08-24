@@ -24,7 +24,8 @@ export function useMenuDragger(containerRef, data) {
           key: currentComponent.key,
           alignCenter: true,
           // 拖拽的都有配置信息
-          props:{}
+          props: {},
+          model:{}
         },
       ],
     };

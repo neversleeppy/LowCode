@@ -1,9 +1,9 @@
-import { computed, defineComponent, inject, onMounted, ref} from "vue"
-
+import { computed, defineComponent, inject, onMounted, ref } from "vue"
 
 export default defineComponent({
     props: {
-        block: { type: Object }
+        block: { type: Object },
+        formData: { type: Object }
     },
     setup(props) {
         const blockStyles = computed(() => ({
@@ -31,12 +31,23 @@ export default defineComponent({
             // 通过block的key属性直接获取对应的组件
             const component = config.componentMap[props.block.key];
 
-            
+
             // 获取render函数
             const RenderComponent = component.render(
                 {
                     // 每次渲染的时候 渲染文本跟实际渲染出来的效果要统一
                     props: props.block.props,
+
+                    model: Object.keys(component.model || {}).reduce((prev, modelName) => {
+
+                        let propName = props.block.model[modelName]; // 'username'
+                        console.log(propName)
+                        prev[modelName] = {
+                            modelValue: props.formData[propName], // xiaomin
+                            "onUpdate:modelValue": v => props.formData[propName] = v
+                        }
+                        return prev;
+                    }, {})
                 }
             );
             return <div class="editor-block"

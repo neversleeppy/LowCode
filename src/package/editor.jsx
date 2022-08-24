@@ -9,12 +9,13 @@ import { useCommand } from "./useCommand";
 import { $dialog } from "@/components/Dialog";
 import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from './editor-operator'
-
+import { ElButton } from "element-plus";
 
 
 export default defineComponent({
     props: {
-        modelValue: { type: Object }
+        modelValue: { type: Object },
+        formData: { type: Object }
     },
     emits: ['update:modelValue'],
 
@@ -99,9 +100,9 @@ export default defineComponent({
                 }
             },
         ]
-        
+
         // 右键 打开上下文菜单
-        const onContextMenuBlock =(e,block)=>{
+        const onContextMenuBlock = (e, block) => {
             e.preventDefault();
             $dropdown({
                 el: e.target, // 以哪个元素为准产生一个dropdown
@@ -136,12 +137,12 @@ export default defineComponent({
         }
 
 
-        return () => !editorRef.value ?<>
-        {/* 进入全屏预览状态, 只显示预览状态的编辑区*/}
-        <div
+        return () => !editorRef.value ? <>
+            {/* 进入全屏预览状态, 只显示预览状态的编辑区*/}
+            <div
                 class="editor-container-canvas__content"
                 style={containerStyles.value}
-                
+
             >
                 {
                     (data.value.blocks.map((block, index) => (
@@ -158,73 +159,73 @@ export default defineComponent({
                 <ElButton type="primary" onClick={() => editorRef.value = true}>继续编辑</ElButton>
                 {JSON.stringify(props.formData)}
             </div>
-        </>:
-        // 编辑器
-        <div class="editor">
-            {/* 菜单区 */}
-            <div class="editor-left">
-                {/* 根据注册列表 渲染对应的内容 可以实现h5的拖拽*/}
-                {config.componentList.map(component => (
-                    <div class="editor-left-item"
-                        draggable
-                        onDragstart={e => dragstart(e, component)}
-                        onDragend={dragend}
-                    >
-                        <span>{component.label}</span>
-                        <div>{component.preview()}</div>
-                    </div>))}
-
-            </div>
-            {/* 按钮区 map循环渲染按钮*/}
-            <div class="editor-top">
-                {buttons.map((btn, index) => {
-                    const icon = typeof btn.icon == 'function' ? btn.icon() : btn.icon
-                    const label = typeof btn.label == 'function' ? btn.label() : btn.label
-                    return <div class="editor-top-button" onClick={btn.handler}>
-                        <i class={icon}></i>
-                        <span>{label}</span>
-                    </div>
-                })}
-            </div>
-
-                {/* 右侧属性控制栏 */}
-            <div class="editor-right">
-                {/* 最后一个元素展示属性 */}
-            <EditorOperator
-             block={lastSelectBlock.value}
-             data={data.value}
-             updateContainer={commands.updateContainer}
-             updateBlock={commands.updateBlock}
-            >
-            </EditorOperator>
-            </div>
-            {/* 拖拽的盒子区域 */}
-            <div class="editor-container">
-                {/* 负责产生滚动条 */}
-                <div class="editor-container-canvas">
-                    {/* 产生内容 */}
-                    <div class="editor-container-canvas__content"
-                        style={containerStyles.value}
-                        ref={containerRef}
-                        onMouseDown={containerMousedown}>
-
-                        {(data.value.blocks.map((block, index) => (
-                            <EditorBlock
-                                class={block.focus ? 'editor-block-focus' : ''}
-                                class={previewRef.value ? 'editor-block-preview' : ''}
-                                block={block}
-                                onMousedown={(e) => blockMousedown(e, block, index)}
-                                // 按下右键后 显示上下问菜单
-                                onContextmenu={(e) => onContextMenuBlock(e, block)}
-                                    formData={props.formData}
-                            ></EditorBlock>
-                        )))}
-                        {markLine.x !== null && <div class="line-x" style={{ left: markLine.x + 'px' }}></div>}
-                        {markLine.y !== null && <div class="line-y" style={{ top: markLine.y + 'px' }}></div>}
-                    </div>
+        </> :
+            // 编辑器
+            <div class="editor">
+                {/* 菜单区 */}
+                <div class="editor-left">
+                    {/* 根据注册列表 渲染对应的内容 可以实现h5的拖拽*/}
+                    {config.componentList.map(component => (
+                        <div class="editor-left-item"
+                            draggable
+                            onDragstart={e => dragstart(e, component)}
+                            onDragend={dragend}
+                        >
+                            <span>{component.label}</span>
+                            <div>{component.preview()}</div>
+                        </div>))}
 
                 </div>
+                {/* 按钮区 map循环渲染按钮*/}
+                <div class="editor-top">
+                    {buttons.map((btn, index) => {
+                        const icon = typeof btn.icon == 'function' ? btn.icon() : btn.icon
+                        const label = typeof btn.label == 'function' ? btn.label() : btn.label
+                        return <div class="editor-top-button" onClick={btn.handler}>
+                            <i class={icon}></i>
+                            <span>{label}</span>
+                        </div>
+                    })}
+                </div>
+
+                {/* 右侧属性控制栏 */}
+                <div class="editor-right">
+                    {/* 最后一个元素展示属性 */}
+                    <EditorOperator
+                        block={lastSelectBlock.value}
+                        data={data.value}
+                        updateContainer={commands.updateContainer}
+                        updateBlock={commands.updateBlock}
+                    >
+                    </EditorOperator>
+                </div>
+                {/* 拖拽的盒子区域 */}
+                <div class="editor-container">
+                    {/* 负责产生滚动条 */}
+                    <div class="editor-container-canvas">
+                        {/* 产生内容 */}
+                        <div class="editor-container-canvas__content"
+                            style={containerStyles.value}
+                            ref={containerRef}
+                            onMouseDown={containerMousedown}>
+
+                            {(data.value.blocks.map((block, index) => (
+                                <EditorBlock
+                                    class={block.focus ? 'editor-block-focus' : ''}
+                                    class={previewRef.value ? 'editor-block-preview' : ''}
+                                    block={block}
+                                    onMousedown={(e) => blockMousedown(e, block, index)}
+                                    // 按下右键后 显示上下问菜单
+                                    onContextmenu={(e) => onContextMenuBlock(e, block)}
+                                    formData={props.formData}
+                                ></EditorBlock>
+                            )))}
+                            {markLine.x !== null && <div class="line-x" style={{ left: markLine.x + 'px' }}></div>}
+                            {markLine.y !== null && <div class="line-y" style={{ top: markLine.y + 'px' }}></div>}
+                        </div>
+
+                    </div>
+                </div>
             </div>
-        </div>
     }
 })

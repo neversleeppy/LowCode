@@ -1,7 +1,7 @@
 {
     "container": {
-        "width": "550",
-        "height": "550"
+        "width": 550,
+        "height": 550
     },
     "blocks": [
         {
@@ -23,8 +23,7 @@
             "key": "button",
             "props":{
                 "text":"testBtn",
-                "type":"primary",
-                "size":"mini"
+                "type":"primary"
             }
         },
         {
@@ -32,7 +31,8 @@
             "left": 300,
             "zIndex": 1,
             "key": "input",
-            "props":{},"model":{}
+            "props":{},
+            "model":{}
         }
     ]
 }
