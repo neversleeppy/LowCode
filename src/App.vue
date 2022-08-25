@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <Editor v-model="state" :formData="formData"></Editor>
+    <!-- <Range :start="0" :end="100"></Range> -->
   </div>
 </template>
 
@@ -16,17 +17,18 @@ export default {
   },
   setup() {
     const state = ref(data);
-
     provide("config", config);
 
     const formData = ref({
-      username:'xiaoming',
-      password:123,
-    })
+      username: "xiaoming",
+      password: 123,
+      start:0,
+      end:100
+    });
 
     return {
       state,
-      formData
+      formData,
     };
   },
 };
